@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      volumes:
+        - name: nginx-data
+          emptyDir: {}
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80  # Add this line to expose port 80
+          volumeMounts:
+            - name: nginx-data
+              mountPath: /var/www/html
